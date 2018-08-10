@@ -1,1 +1,4 @@
-# FSND_Logs_Analysis_Project
+# FSND Logs Analysis Project
+
+## Getting Started
+
