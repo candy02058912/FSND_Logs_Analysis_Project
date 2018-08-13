@@ -60,6 +60,7 @@ def show_error_days():
     for result in results:
         print("{} -- {}% errors".format(result[0], result[1]))
 
+
 show_popular_articles()
 show_popular_authors()
 show_error_days()
