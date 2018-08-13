@@ -2,6 +2,7 @@
 
 import psycopg2
 
+
 def query_news(query):
     """Run queries on news database and return query results"""
     db = psycopg2.connect(database="news")
@@ -10,6 +11,7 @@ def query_news(query):
     results = c.fetchall()
     db.close()
     return results
+
 
 def show_popular_articles():
     """Print top three articles of all time"""
@@ -24,6 +26,7 @@ def show_popular_articles():
     for result in results:
         print("{} -- {} views".format(result[0], result[1]))
 
+
 def show_popular_authors():
     """Print all authors by popularity"""
     popular_authors_query = """
@@ -36,16 +39,23 @@ def show_popular_authors():
     for result in results:
         print("{} -- {} views".format(result[0], result[1]))
 
+
 def show_error_days():
     error_days_query = """
     select total_requests.date,
-    round(error_requests.request_num::NUMERIC / total_requests.request_num * 100, 1) as errors
+    round(
+        error_requests.request_num::NUMERIC /
+        total_requests.request_num * 100, 1
+    ) as errors
     from total_requests, error_requests
     where total_requests.date = error_requests.date and
-    round(error_requests.request_num::NUMERIC / total_requests.request_num * 100, 1) > 1.0
+    round(
+        error_requests.request_num::NUMERIC /
+        total_requests.request_num * 100, 1
+    ) > 1.0
     group by total_requests.date, errors;
     """
-    results = query_news(error_days_query)    
+    results = query_news(error_days_query)
     print("3. On which days did more than 1% of requests lead to errors?")
     for result in results:
         print("{} -- {}% errors".format(result[0], result[1]))
